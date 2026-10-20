@@ -265,3 +265,6 @@ body.nav-open #navMobile .m-links a{opacity:1; transform:none}
 .doc{max-width:720px; margin:0 auto; padding:6rem 1.5rem 4rem; line-height:1.7}
 .doc h1{font-size:2rem; margin-bottom:.4rem} .doc h2{font-size:1.15rem; margin:2rem 0 .4rem} .doc p,.doc li{color:var(--muted)} .doc ul{padding-left:1.2rem} .doc a{text-decoration:underline; color:var(--fg)}
 .doc .back{display:inline-flex; gap:.5rem; align-items:center; font-size:.85rem; margin-bottom:2rem; text-decoration:none}
+
+/* éléments masqués (sections sans contenu réel) */
+[hidden]{display:none!important}

@@ -172,6 +172,20 @@ const TESTIMONIALS = [
   {text:"[Témoignage à venir]", author:"[Nom, rôle]"},
 ];
 
+// ---- contenu réel uniquement : les textes entre [crochets] ne sont ni affichés ni indexés ----
+const isPH = s => typeof s==='string' && /^\[.*\]$/.test(s.trim());
+const REAL_POSTS = POSTS.filter(p=>!isPH(p.title));
+const REAL_TESTI = TESTIMONIALS.filter(t=>!isPH(t.text));
+Object.keys(CV).forEach(k=>{ CV[k]=CV[k].filter(i=> typeof i==='string' ? !isPH(i) : !isPH(i.t)); if(!CV[k].length) delete CV[k]; });
+function toggleSection(id, show){
+  const sec=document.getElementById(id); if(sec) sec.hidden=!show;
+  document.querySelectorAll('a[href="#'+id+'"]').forEach(a=>{ const el=a.closest('li')||a; el.hidden=!show; });
+}
+toggleSection('blog', REAL_POSTS.length>0);
+toggleSection('temoignages', REAL_TESTI.length>0);
+// texte alternatif descriptif des images (SEO + accessibilité)
+const altWork = (title,cat) => `${title} — ${cat}, par Josaphat N. Ngoma, Kinshasa`;
+
 // ---- rendu depuis CONTENT / WORKS / SERVICES ----
 navName.textContent = CONTENT.name;
 heroName.textContent = CONTENT.name;
@@ -234,7 +248,7 @@ function renderGrid(filter){
   grid.innerHTML = list
     .map((w,i)=>`
       <div class="card reveal"${all ? '' : ` data-side="${i%2===0?'left':'right'}"`} data-title="${w.title}" data-cat="${w.category}" data-year="${w.year}" data-img="${w.img}">
-        <div class="ph">${w.img ? `<img src="${encodeURI(photoPath(w.category, w.img))}" alt="${w.title}" decoding="async">` : 'Image à venir'}</div>
+        <div class="ph">${w.img ? `<img src="${encodeURI(photoPath(w.category, w.img))}" alt="${altWork(w.title,w.category)}" loading="lazy" decoding="async">` : 'Image à venir'}</div>
         <div class="info"><h3>${w.title}</h3><span>${w.category} — ${w.year}</span></div>
       </div>`).join('');
   observeReveals();
@@ -257,13 +271,13 @@ cvGrid.innerHTML = Object.entries(CV).map(([label,items])=>`
   <div class="glass"><h3>${label}</h3><ul>${items.map(i=> typeof i==='string' ? `<li>${i}</li>` : `<li class="cv-entry"><strong>${i.t}</strong><span>${i.s}</span></li>`).join('')}</ul></div>
 `).join('');
 
-blogGrid.innerHTML = POSTS.map(p=>`
+blogGrid.innerHTML = REAL_POSTS.map(p=>`
   <article class="post glass"><div class="eyebrow">${p.cat} — ${p.date}</div><h3>${p.title}</h3><p>${p.excerpt}</p></article>
 `).join('');
 
 shopGrid.innerHTML = PRODUCTS.map(pr=>`
   <div class="product glass reveal">
-    <div class="ph">${pr.img ? `<img src="${encodeURI(SHOP_IMAGES_DIR + pr.img)}" alt="${pr.title}" decoding="async">` : 'Image à venir'}</div>
+    <div class="ph">${pr.img ? `<img src="${encodeURI(SHOP_IMAGES_DIR + pr.img)}" alt="${pr.title} — boutique Josaphat N. Ngoma" loading="lazy" decoding="async">` : 'Image à venir'}</div>
     <div class="info">
       <h3>${pr.title}</h3>
       <div class="price">${pr.price}</div>
@@ -274,10 +288,10 @@ shopGrid.innerHTML = PRODUCTS.map(pr=>`
 observeReveals();
 
 let tIdx = 0;
-function renderTesti(){ tText.textContent = TESTIMONIALS[tIdx].text; tAuthor.textContent = TESTIMONIALS[tIdx].author; }
+function renderTesti(){ if(!REAL_TESTI.length) return; tText.textContent = REAL_TESTI[tIdx].text; tAuthor.textContent = REAL_TESTI[tIdx].author; }
 renderTesti();
-tPrev.addEventListener('click', ()=>{ tIdx = (tIdx-1+TESTIMONIALS.length)%TESTIMONIALS.length; renderTesti(); });
-tNext.addEventListener('click', ()=>{ tIdx = (tIdx+1)%TESTIMONIALS.length; renderTesti(); });
+tPrev.addEventListener('click', ()=>{ tIdx = (tIdx-1+REAL_TESTI.length)%REAL_TESTI.length; renderTesti(); });
+tNext.addEventListener('click', ()=>{ tIdx = (tIdx+1)%REAL_TESTI.length; renderTesti(); });
 testi.addEventListener('keydown', e=>{
   if(e.key==='ArrowLeft') tPrev.click();
   if(e.key==='ArrowRight') tNext.click();
@@ -341,7 +355,7 @@ grid.addEventListener('click', e=>{
   if(!card) return;
   const img = card.dataset.img;
   lbImg.classList.toggle('has-img', !!img);
-  lbImg.innerHTML = img ? `<img src="${encodeURI(photoPath(card.dataset.cat || "", img))}" alt="${card.dataset.title}">` : 'Image à venir';
+  lbImg.innerHTML = img ? `<img src="${encodeURI(photoPath(card.dataset.cat || "", img))}" alt="${altWork(card.dataset.title, card.dataset.cat)}">` : 'Image à venir';
   lbTitle.textContent = card.dataset.title;
   lbMeta.textContent = card.dataset.cat + ' — ' + card.dataset.year;
   lb.classList.add('open');
