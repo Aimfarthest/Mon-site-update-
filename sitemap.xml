@@ -24,4 +24,12 @@
     <image:image><image:loc>https://josaphatngoma.netlify.app/images/portfolio/Projet%20num%C3%A9rique/Maillot%20rendu%203D.webp</image:loc></image:image>
     <image:image><image:loc>https://josaphatngoma.netlify.app/images/portfolio/Projet%20num%C3%A9rique/Visuel%20rendu%203D.webp</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://josaphatngoma.netlify.app/confidentialite</loc>
+    <lastmod>2026-10-20</lastmod>
+  </url>
+  <url>
+    <loc>https://josaphatngoma.netlify.app/mentions-legales</loc>
+    <lastmod>2026-10-20</lastmod>
+  </url>
 </urlset>

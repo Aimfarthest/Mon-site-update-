@@ -281,7 +281,7 @@ shopGrid.innerHTML = PRODUCTS.map(pr=>`
     <div class="info">
       <h3>${pr.title}</h3>
       <div class="price">${pr.price}</div>
-      <a href="${CONTENT.whatsapp}?text=${encodeURIComponent('Bonjour, je suis intéressé par : *'+pr.title+'*')}" target="_blank">Commander</a>
+      <a href="${CONTENT.whatsapp}?text=${encodeURIComponent('Bonjour, je suis intéressé par : *'+pr.title+'*')}" target="_blank" rel="noopener">Commander</a>
     </div>
   </div>
 `).join('');

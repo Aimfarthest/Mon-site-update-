@@ -107,15 +107,14 @@ const ld = {
 };
 const TITLE = 'Josaphat N. Ngoma | Artiste plasticien & designer graphique à Kinshasa';
 const DESC = 'Portfolio de Josaphat N. Ngoma, artiste plasticien et designer en communication visuelle à Kinshasa : portraits, illustrations, logos, flyers et identité visuelle.';
-const head = `<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>${esc(TITLE)}</title>
+const head = `<title>${esc(TITLE)}</title>
 <meta name="description" content="${esc(DESC)}">
 <meta name="author" content="Josaphat N. Ngoma">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#111113">
 <link rel="canonical" href="${BASE}">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
@@ -136,7 +135,7 @@ const head = `<meta charset="UTF-8">
 ${JSON.stringify(ld, null, 2)}
 </script>
 <link rel="stylesheet" href="style.css">`;
-const re = /<meta charset="UTF-8">[\s\S]*?<link rel="stylesheet" href="style\.css">/;
+const re = /<title>[\s\S]*?<link rel="stylesheet" href="style\.css">/;
 if (!re.test(h)) throw new Error('head introuvable');
 h = h.replace(re, () => head);
 h = h.replace(/^\s+<!DOCTYPE/, '<!DOCTYPE');
@@ -158,7 +157,7 @@ const seen = new Set(); const imgs = [];
 });
 const today = new Date().toISOString().slice(0, 10);
 const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n  <url>\n    <loc>' + BASE + '</loc>\n    <lastmod>' + today + '</lastmod>\n' +
-  imgs.map(f => '    <image:image><image:loc>' + esc(BASE + encodeURI(f)) + '</image:loc></image:image>\n').join('') + '  </url>\n</urlset>\n';
+  imgs.map(f => '    <image:image><image:loc>' + esc(BASE + encodeURI(f)) + '</image:loc></image:image>\n').join('') + '  </url>\n' + ['confidentialite', 'mentions-legales'].map(p => '  <url>\n    <loc>' + BASE + p + '</loc>\n    <lastmod>' + today + '</lastmod>\n  </url>\n').join('') + '</urlset>\n';
 fs.writeFileSync(path.join(dir, 'sitemap.xml'), xml, 'utf8');
 fs.writeFileSync(path.join(dir, 'robots.txt'), 'User-agent: *\nAllow: /\nDisallow: /build/\n\nSitemap: ' + BASE + 'sitemap.xml\n', 'utf8');
 console.log('sitemap.xml:', imgs.length, 'images');
