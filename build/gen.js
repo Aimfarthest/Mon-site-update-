@@ -111,7 +111,7 @@ const head = `<title>${esc(TITLE)}</title>
 <meta name="description" content="${esc(DESC)}">
 <meta name="author" content="Josaphat N. Ngoma">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#111113">
+<meta name="theme-color" content="#0F2227">
 <link rel="canonical" href="${BASE}">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48">

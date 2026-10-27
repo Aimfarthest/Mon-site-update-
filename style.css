@@ -1,7 +1,7 @@
 :root{
-  --bg:#faf8f5; --bg-rgb:250,248,245; --fg:#111111; --muted:#6b6b6b; --line:#e6e6e6; --panel:#f4f4f3; --panel-2:#efe3e0;
-  --overlay-rgb:250,248,245;
-  --accent:#B23A2E;
+  --bg:#F4F8F7; --bg-rgb:244,248,247; --fg:#0F2227; --muted:#4A6169; --line:#D3E1DE; --panel:#E7F0EE; --panel-2:#D9EAE6;
+  --overlay-rgb:244,248,247;
+  --accent:#0B7F70; --on-accent:#ffffff; --steel:#2F6A99; --copper:#B45A2A;
   --dur-s:.28s; --dur-m:.6s; --dur-l:.9s;
   --ease:cubic-bezier(.22,1,.36,1);
   box-sizing:border-box;
@@ -10,7 +10,8 @@
 }
 /* Le mode sombre n'est jamais activé automatiquement par le système : uniquement quand le visiteur bascule le switch (voir data-theme + localStorage plus bas) */
 :root[data-theme="dark"]{
-  --bg:#141210; --bg-rgb:20,18,16; --fg:#f2f2f0; --muted:#a8a8a6; --line:#3a3530; --panel:#201d1a; --panel-2:#2b1f19;
+  --bg:#0F2227; --bg-rgb:15,34,39; --fg:#F4F8F7; --muted:#A9B4C2; --line:#24474A; --panel:#103B3A; --panel-2:#14504E;
+  --accent:#00E6C3; --on-accent:#0F2227; --steel:#5B97CC; --copper:#D2703A;
   --overlay-rgb:255,255,255;
 }
 *{box-sizing:border-box; margin:0; padding:0}
@@ -38,7 +39,7 @@ h1,h2,h3{font-weight:600; letter-spacing:-.01em}
 #nav .tools{display:flex; align-items:center; gap:.9rem}
 .theme-switch{border:none; background:none; padding:0; cursor:pointer; -webkit-tap-highlight-color:transparent}
 .theme-switch .ts-track{position:relative; display:flex; align-items:center; width:54px; height:30px; border-radius:999px; padding:3px; border:1px solid var(--line); background:rgba(var(--overlay-rgb),.35); backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); box-shadow:inset 0 1px 3px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.16); transition:border-color var(--dur-s) var(--ease), background var(--dur-s) var(--ease), scale .2s var(--ease), box-shadow .2s var(--ease)}
-.theme-switch:hover .ts-track{border-color:var(--accent)}
+@media (hover:hover){.theme-switch:hover .ts-track{border-color:var(--accent)}}
 .theme-switch .ts-thumb{position:relative; width:22px; height:22px; border-radius:50%; background:var(--fg); box-shadow:0 2px 6px rgba(0,0,0,.18); transform:translateX(0); transition:transform .45s cubic-bezier(.65,-0.25,.35,1.25), background var(--dur-s) var(--ease)}
 .theme-switch .ts-icon{position:absolute; inset:0; margin:auto; width:13px; height:13px; color:var(--bg); transition:opacity .3s var(--ease), transform .45s var(--ease)}
 .theme-switch .ts-sun{opacity:1; transform:rotate(0deg) scale(1)}
@@ -55,7 +56,7 @@ h1,h2,h3{font-weight:600; letter-spacing:-.01em}
 body.nav-open #navMobile{transform:translateX(0)}
 /* liens du menu = vrais boutons (même style que les boutons de contact), zone de toucher large (52px) */
 #navMobile a{display:flex; align-items:center; justify-content:center; width:min(100%,320px); min-height:52px; padding:.85rem 1.4rem; border-radius:2rem; font-size:1rem; color:var(--fg); border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 8px 24px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.16); transition:all var(--dur-s)}
-#navMobile a:hover,#navMobile a:active{border-color:var(--accent); color:var(--accent)}
+@media (hover:hover){#navMobile a:hover{border-color:var(--accent); color:var(--accent)}}
 #navMobile .close{position:absolute; top:calc(1rem + env(safe-area-inset-top,0px)); right:1rem; width:48px; height:48px; display:flex; align-items:center; justify-content:center; background:none; border:none; color:var(--fg); font-size:1.6rem; cursor:pointer}
 
 /* glass utility */
@@ -75,7 +76,8 @@ body.nav-open #navMobile{transform:translateX(0)}
 /* blog */
 .blog-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.4rem}
 .post{border-radius:1rem; padding:1.5rem}
-.post:hover{border-color:var(--accent); transform:translateY(-3px); box-shadow:0 14px 34px rgba(0,0,0,.1)}
+.post:hover{transform:translateY(-3px); box-shadow:0 14px 34px rgba(0,0,0,.1)}
+@media (hover:hover){.post:hover{border-color:var(--accent)}}
 .post h3{font-size:1.05rem; margin:.6rem 0 .5rem}
 .post p{font-size:.85rem; color:var(--muted); line-height:1.5}
 
@@ -89,14 +91,14 @@ body.nav-open #navMobile{transform:translateX(0)}
 .product .price{color:var(--accent); font-size:.9rem; margin-bottom:.9rem}
 .product a{display:inline-block; font-size:.8rem; border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 6px 18px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.14); padding:.5rem 1rem; border-radius:2rem; transition:border-color var(--dur-s), transform var(--dur-s), scale .2s var(--ease), box-shadow .2s var(--ease)}
 .product a:hover{transform:translateY(-1px)}
-.product a:hover{border-color:var(--accent); color:var(--accent)}
+@media (hover:hover){.product a:hover{border-color:var(--accent); color:var(--accent)}}
 
 /* témoignages */
 .testi{display:flex; align-items:center; gap:1.4rem; max-width:640px}
 .t-view{flex:1; text-align:center; min-height:5.5rem; padding:1.6rem 1.4rem; border-radius:1.2rem}
 .t-view p{font-size:1.05rem; line-height:1.6; margin-bottom:.8rem}
 .t-btn{flex-shrink:0; background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 6px 18px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.14); border:1px solid rgba(var(--overlay-rgb),.7); border-radius:50%; width:40px; height:40px; cursor:pointer; color:var(--fg); transition:border-color var(--dur-s), transform var(--dur-s), scale .2s var(--ease), box-shadow .2s var(--ease)}
-.t-btn:hover{border-color:var(--accent)}
+@media (hover:hover){.t-btn:hover{border-color:var(--accent)}}
 
 /* hero */
 #hero{min-height:100svh; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:6rem 1.5rem 3rem; position:relative}
@@ -106,7 +108,7 @@ body.nav-open #navMobile{transform:translateX(0)}
 #hero .tagline{margin-top:1.7rem; padding-top:1.3rem; border-top:1px solid var(--line); max-width:36ch; font-size:clamp(1.05rem,2vw,1.25rem); font-weight:600; font-style:italic; letter-spacing:-.01em; color:var(--fg)}
 #hero .reveal{--tx:26px; --rblur:7px; --rdur:.65s}
 #hero .cta{margin-top:2.4rem; display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.6rem; border-radius:2rem; background:var(--fg); color:var(--bg); font-size:.9rem; opacity:0; transform:translateY(20px); animation:reveal var(--dur-l) var(--ease) .9s forwards; transition:background var(--dur-s), scale .2s var(--ease), box-shadow .2s var(--ease)}
-#hero .cta:hover{background:var(--accent); color:#fff}
+#hero .cta:hover{background:var(--accent); color:var(--on-accent)}
 @keyframes reveal{to{opacity:1; transform:translateY(0)}}
 @media (prefers-reduced-motion:reduce){ #hero .cta{animation:none; opacity:1; transform:none} }
 
@@ -118,7 +120,8 @@ section{padding:6rem 0}
 /* filters */
 .filters{display:flex; gap:.55rem; flex-wrap:wrap; align-items:center}
 .filters button{border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 6px 18px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.14); color:var(--muted); padding:.48rem 1rem; min-height:36px; border-radius:2rem; font-size:.8rem; cursor:pointer; transition:all var(--dur-s); white-space:nowrap}
-.filters button.active,.filters button:hover{border-color:var(--fg); color:var(--fg)}
+.filters button.active{border-color:var(--fg); color:var(--fg)}
+@media (hover:hover){.filters button:hover{border-color:var(--fg); color:var(--fg)}}
 @media (max-width:760px){
   .section-head{align-items:flex-start}
   #portfolio .section-head{display:block}
@@ -182,7 +185,7 @@ section{padding:6rem 0}
 #contact .row{display:flex; flex-wrap:wrap; gap:.75rem; margin-top:2rem; align-items:stretch}
 #contact a.btn{border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 8px 24px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.16); padding:.9rem 1.4rem; min-height:46px; border-radius:2rem; font-size:.85rem; transition:all var(--dur-s); display:inline-flex; align-items:center; justify-content:center; white-space:nowrap}
 #contact a.btn:hover{transform:translateY(-2px)}
-#contact a.btn:hover{border-color:var(--accent); color:var(--accent)}
+@media (hover:hover){#contact a.btn:hover{border-color:var(--accent); color:var(--accent)}}
 @media (max-width:600px){
   #contact .row{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.65rem}
   #contact a.btn{width:100%; padding:.85rem .65rem}
@@ -219,7 +222,6 @@ footer .soc{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.7rem 1.
 .filters button:active, #contact a.btn:active, #navMobile a:active, .product a:active, .t-btn:active,
 .burger:active, #top:active, #hero .cta:active, .theme-switch:active .ts-track{
   scale:.965;
-  box-shadow:inset 0 2px 6px rgba(0,0,0,.2), inset 0 0 0 100vmax rgba(0,0,0,.06);
   transition-duration:.08s;
 }
 @media (prefers-reduced-motion:reduce){
@@ -268,3 +270,133 @@ body.nav-open #navMobile .m-links a{opacity:1; transform:none}
 
 /* éléments masqués (sections sans contenu réel) */
 [hidden]{display:none!important}
+
+/* ===== Refonte : palette, hero remplacé par l'intro, menu translucide ===== */
+::selection{background:var(--steel); color:#fff}
+html,body{overflow-x:clip; max-width:100%}
+/* le hero reste dans le DOM (SEO / lecteurs d'écran) mais n'est plus affiché : l'intro le remplace */
+#hero{min-height:0; padding:0; position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+#portfolio{padding-top:calc(6rem + env(safe-area-inset-top,0px))}
+/* nav : ne jamais déborder à droite */
+#nav .mark{min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+#nav .tools{flex:none}
+/* burger + panneau mobile translucides avec flou */
+.burger{background:rgba(var(--overlay-rgb),.18); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); border:1px solid rgba(var(--overlay-rgb),.35)}
+#navMobile{background:rgba(var(--bg-rgb),.84); backdrop-filter:blur(30px) saturate(180%); -webkit-backdrop-filter:blur(30px) saturate(180%)}
+
+
+/* ===== Refonte : focus sans cadre, fond, verre teinté, accents ===== */
+:focus,:focus-visible{outline:none}
+body.kbd :focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+button,a{-webkit-tap-highlight-color:transparent}
+/* fond : voiles de turquoise / bleu acier très légers par-dessus la texture */
+body{background-image:radial-gradient(70% 45% at 8% 0%,rgba(var(--glow-a),.16),transparent 70%),radial-gradient(60% 40% at 100% 100%,rgba(var(--glow-b),.14),transparent 70%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root{--glow-a:11,127,112; --glow-b:47,106,153}
+:root[data-theme="dark"]{--glow-a:0,230,195; --glow-b:63,127,181; --overlay-rgb:90,170,160}
+:root[data-theme="dark"] .glass,:root[data-theme="dark"] .t-btn{border-color:rgba(169,180,194,.22)}
+:root[data-theme="dark"] .card{box-shadow:0 14px 34px rgba(0,0,0,.45)}
+:root[data-theme="dark"] .services .svc,:root[data-theme="dark"] .post{background:rgba(16,59,58,.55)}
+/* accents : turquoise = signature, bleu acier = repères, cuivre = touches rares */
+.cv-grid h3{color:var(--steel)}
+.services .svc .n{color:var(--copper)}
+.filters button.active{border-color:var(--accent); color:var(--accent)}
+@media (hover:hover){.filters button:hover{border-color:var(--accent); color:var(--accent)}}
+.product .price{color:var(--copper)}
+/* ===== Écran d'intro ===== */
+#intro{position:fixed; inset:0; z-index:1000; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.1rem; padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px); background:radial-gradient(120% 90% at 50% 38%,#173F45 0%,#0F2227 62%,#0A171B 100%); color:#F4F8F7; overflow:hidden; overscroll-behavior:contain; transition:opacity .8s var(--ease), visibility 0s .8s; animation:i-gone 0s linear 12s forwards}
+#intro.i-leave{opacity:0; visibility:hidden; pointer-events:none}
+@keyframes i-gone{to{visibility:hidden}}
+.no-intro #intro{display:none}
+html.intro-on{overflow:hidden}
+.i-stage{position:relative; width:min(100vw,calc(100svh - 8rem),760px); aspect-ratio:1/1; flex:none}
+.i-photo,.i-svg{position:absolute; inset:0; width:100%; height:100%}
+.i-photo{--sh:drop-shadow(6px 10px 10px rgba(0,0,0,.38)) drop-shadow(22px 34px 40px rgba(0,0,0,.45)); object-fit:contain; filter:var(--sh); opacity:0}
+.i-svg{overflow:visible; font-family:"Bebas Neue","Oswald","Arial Narrow","Helvetica Neue",Arial,sans-serif; font-stretch:condensed}
+.i-svg .i-a{opacity:0; transform-box:fill-box; transform-origin:center}
+@keyframes i-in{from{opacity:0; transform:translate(var(--fx,0px),var(--fy,0px)) scale(var(--fs,1))} to{opacity:1; transform:none}}
+@keyframes i-photo{from{opacity:0; transform:translateY(46px) scale(.97); filter:drop-shadow(0 0 0 rgba(0,0,0,0)) drop-shadow(0 0 0 rgba(0,0,0,0)) blur(10px)} to{opacity:1; transform:none; filter:drop-shadow(6px 10px 10px rgba(0,0,0,.38)) drop-shadow(22px 34px 40px rgba(0,0,0,.45)) blur(0)}}
+#intro.i-run .i-photo{animation:i-photo .6s var(--ease) .05s both}
+#intro.i-run .i-a{animation:i-in .45s var(--ease) var(--d,0s) both}
+.i-cta{position:relative; z-index:1; display:inline-flex; align-items:center; gap:.6rem; padding:.95rem 1.8rem; border-radius:2rem; text-decoration:none; background:rgba(244,248,247,.1); border:1px solid rgba(244,248,247,.3); color:#F4F8F7; touch-action:manipulation; font:600 .98rem/1 'Helvetica Neue',Arial,sans-serif; backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 10px 28px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.25); opacity:0; pointer-events:none; transition:scale .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease)}
+@media (hover:hover){.i-cta:hover{background:rgba(244,248,247,.17)}}
+.i-cta:active{scale:.97}
+#intro.i-ready .i-cta{pointer-events:auto; animation:i-in .4s var(--ease) both; --fy:22px}
+.i-skip{position:absolute; z-index:5; touch-action:manipulation; top:calc(1rem + env(safe-area-inset-top,0px)); right:1rem; padding:.55rem 1.1rem; border-radius:2rem; border:1px solid rgba(244,248,247,.28); background:rgba(244,248,247,.1); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); color:#F4F8F7; font:500 .85rem 'Helvetica Neue',Arial,sans-serif; cursor:pointer}
+.i-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+/* « Passer » / mouvement réduit : état final immédiat */
+#intro.i-skip .i-photo{animation:none; opacity:1}
+#intro.i-skip .i-a{animation:none; opacity:1; transform:none}
+#intro.i-skip .i-cta{animation:none; opacity:1}
+
+
+/* ===== Refonte v3 : couleurs contrastées, menu, transition d'intro ===== */
+/* textes d'accent : orange (n°, prix) et bleu (titres du CV) assez clairs / foncés pour rester lisibles sur les cartes */
+:root{--copper-text:#8F4217; --steel-text:#1D4E78}
+:root[data-theme="dark"]{--copper-text:#FFB070; --steel-text:#A3D0FF}
+.services .svc .n,.product .price{color:var(--copper-text); font-weight:700}
+.cv-grid h3{color:var(--steel-text); font-weight:700}
+.services .svc .n{font-size:.95rem; letter-spacing:.08em}
+.product .price{font-size:1.05rem}
+
+/* --- menu : le bouton se transforme en croix, le cercle part de son centre --- */
+.burger .ic path{transition:transform .55s var(--ease); transform-box:fill-box; transform-origin:center}
+body.nav-open .burger .l1{transform:translateY(4px) rotate(45deg)}
+body.nav-open .burger .l2{transform:translate(2.5px,-4px) rotate(-45deg) scaleX(1.4545)}
+.burger:active{scale:.92}
+#nav{transition:border-color var(--dur-s), padding var(--dur-s), background-color .4s var(--ease)}
+body.nav-open #nav{z-index:170; background:transparent; backdrop-filter:none; -webkit-backdrop-filter:none; border-bottom-color:transparent}
+#navMobile .close{display:none}
+#navMobile{background:rgba(var(--bg-rgb),.97); backdrop-filter:none; -webkit-backdrop-filter:none;
+  clip-path:circle(0 at var(--ox,calc(100% - 2.7rem)) var(--oy,2.4rem)); transition:clip-path .5s var(--ease) .08s, visibility 0s .6s}
+body.nav-open #navMobile{clip-path:circle(150% at var(--ox,calc(100% - 2.7rem)) var(--oy,2.4rem)); transition:clip-path .8s var(--ease), visibility 0s}
+#navMobile .m-name,#navMobile .m-foot{opacity:0; transform:translateY(14px); transition:opacity .25s var(--ease), transform .25s var(--ease)}
+body.nav-open #navMobile .m-name{opacity:1; transform:none; transition:opacity .5s var(--ease) .15s, transform .6s var(--ease) .15s}
+body.nav-open #navMobile .m-foot{opacity:1; transform:none; transition:opacity .5s var(--ease) .55s, transform .6s var(--ease) .55s}
+#navMobile .m-links a{transform:translateY(26px); transition:opacity .22s var(--ease), transform .22s var(--ease), color var(--dur-s)}
+body.nav-open #navMobile .m-links a{opacity:1; transform:none; transition:opacity .55s var(--ease) calc(.22s + var(--i)*.06s), transform .65s var(--ease) calc(.22s + var(--i)*.06s), color var(--dur-s)}
+
+/* --- transition intro -> site : l'intro se retire vers le haut, le site arrive derrière --- */
+#intro.i-leave .i-cta,#intro.i-leave .i-skip{opacity:0; transition:opacity .25s var(--ease)}
+@keyframes s-nav{from{opacity:0; transform:translateY(-100%)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){
+  #intro.i-leave{animation:i-fade .25s linear forwards}
+  #intro.i-leave .i-stage{animation:none}
+  html.site-enter #nav,html.site-enter body > section,html.site-enter body > footer{animation:none}
+  .burger .ic path{transition:none}
+  #navMobile,#navMobile *{transition-duration:.01s!important; transition-delay:0s!important}
+}
+@keyframes i-fade{to{opacity:0; visibility:hidden}}
+
+/* la bannière cookies ne passe pas par-dessus le menu ouvert */
+body.nav-open #consent{opacity:0; pointer-events:none; transition:opacity .2s}
+#navMobile{background:rgba(var(--bg-rgb),.985)}
+
+
+/* ===== Refonte v4 : bouton rond fiable + coulissage d'intro ===== */
+/* Cause du bouton « carré » : un flou (backdrop-filter) imbriqué dans la barre, qui a déjà son propre flou,
+   se dessine en carré sur certains Android/Chrome. Les boutons de la barre n'ont donc plus de flou propre. */
+#nav .burger,#nav .theme-switch .ts-track{backdrop-filter:none; -webkit-backdrop-filter:none}
+#nav .burger{flex:none; width:38px; height:38px; padding:0; aspect-ratio:1/1; border-radius:50%; overflow:hidden; -webkit-appearance:none; appearance:none;
+  background:rgba(var(--overlay-rgb),.26); border:1px solid rgba(var(--overlay-rgb),.55); isolation:isolate}
+#nav .burger:focus,#nav .burger:active{outline:none; border-radius:50%}
+@media (max-width:760px){ #nav .burger{display:flex} }
+
+/* --- coulissage intro -> site : rapide, fluide, avec flou --- */
+#intro.i-leave{opacity:1; visibility:visible; pointer-events:auto; transition:none; will-change:transform;
+  box-shadow:0 50px 90px rgba(0,0,0,.55); animation:i-slide .8s cubic-bezier(.76,0,.2,1) forwards}
+#intro.i-leave .i-stage{will-change:transform,filter; animation:i-stage-out .8s cubic-bezier(.76,0,.2,1) forwards}
+@keyframes i-slide{from{transform:translate3d(0,0,0)} to{transform:translate3d(0,-100%,0)}}
+@keyframes i-stage-out{
+  0%{transform:translate3d(0,0,0) scale(1); filter:blur(0); opacity:1}
+  60%{opacity:.85}
+  100%{transform:translate3d(0,-12%,0) scale(1.06); filter:blur(14px); opacity:0}}
+@keyframes s-nav{from{opacity:0; transform:translate3d(0,-100%,0)} to{opacity:1; transform:none}}
+@keyframes s-rise{from{opacity:0; transform:translate3d(0,22vh,0)} to{opacity:1; transform:none}}
+@keyframes s-rise-blur{from{opacity:0; transform:translate3d(0,22vh,0); filter:blur(14px)} to{opacity:1; transform:none; filter:blur(0)}}
+html.site-enter #nav{animation:s-nav .7s cubic-bezier(.16,1,.3,1) .25s backwards}
+html.site-enter body > section,html.site-enter body > footer{animation:s-rise .85s cubic-bezier(.16,1,.3,1) .08s backwards}
+html.site-enter #portfolio{animation:s-rise-blur .85s cubic-bezier(.16,1,.3,1) .08s backwards}
+@media (prefers-reduced-motion:reduce){
+  #intro.i-leave{animation:i-fade .25s linear forwards; box-shadow:none}
+  html.site-enter #portfolio{animation:none}
+}

@@ -298,14 +298,20 @@ testi.addEventListener('keydown', e=>{
 });
 
 // menu mobile
-burgerBtn.addEventListener('click', ()=>{
+function openMobileNav(){
+  // le cercle du menu s'ouvre exactement depuis le centre du bouton
+  var r=burgerBtn.getBoundingClientRect(), nm=document.getElementById('navMobile');
+  nm.style.setProperty('--ox',(r.left+r.width/2)+'px'); nm.style.setProperty('--oy',(r.top+r.height/2)+'px');
   document.body.classList.add('nav-open');
   burgerBtn.setAttribute('aria-expanded','true');
-});
+  burgerBtn.setAttribute('aria-label','Fermer le menu');
+}
 function closeMobileNav(){
   document.body.classList.remove('nav-open');
   burgerBtn.setAttribute('aria-expanded','false');
+  burgerBtn.setAttribute('aria-label','Ouvrir le menu');
 }
+burgerBtn.addEventListener('click', ()=>{ document.body.classList.contains('nav-open') ? closeMobileNav() : openMobileNav(); });
 navMobileClose.addEventListener('click', closeMobileNav);
 document.querySelectorAll('#navMobile a').forEach(a=>a.addEventListener('click', closeMobileNav));
 
@@ -335,8 +341,8 @@ topBtn.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'})
 const root = document.documentElement;
 try{
   const saved = localStorage.getItem('theme');
-  if(saved==='dark') root.setAttribute('data-theme','dark');
-  else root.setAttribute('data-theme','light');
+  if(saved==='light') root.setAttribute('data-theme','light');
+  else root.setAttribute('data-theme','dark');
 }catch(e){}
 function isDarkNow(){ return root.getAttribute('data-theme')==='dark'; }
 function paintThemeIcon(){ themeBtn.setAttribute('aria-checked', String(isDarkNow())); }
@@ -365,7 +371,6 @@ lb.addEventListener('click', e=>{ if(e.target===lb) lb.classList.remove('open');
 
 
 // ===== PRO : menu, cookies, sécurité d'affichage =====
-burgerBtn.addEventListener('click', ()=>setTimeout(()=>navMobileClose.focus(),60));
 document.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.body.classList.contains('nav-open')){ closeMobileNav(); burgerBtn.focus(); } });
 (function(){
   const box=document.getElementById('consent'); let saved=null;
@@ -378,3 +383,71 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.body.c
 })();
 // si l'animation d'apparition ne se déclenche pas (navigateur intégré Instagram), tout afficher
 setTimeout(()=>{ const r=document.querySelectorAll('.reveal'); if(r.length && !document.querySelector('.reveal.visible')) r.forEach(el=>el.classList.add('visible')); },2500);
+
+
+// ===== Écran d'intro =====
+// - la photo apparaît, puis les éléments arrivent un à un ; le bouton « Découvrir mes œuvres » apparaît à la fin
+// - « Passer » ferme l'intro ; Échap / mouvement réduit : état final immédiat
+// - pas d'intro si l'adresse contient un # ou si elle a déjà été vue pendant cette session
+(function(){
+  var intro=document.getElementById('intro'); if(!intro) return;
+  var root=document.documentElement;
+  if(root.classList.contains('no-intro')){ intro.remove(); return; }
+  intro.style.animation='none';
+  root.classList.add('intro-on');
+  var photo=intro.querySelector('.i-photo'), go=document.getElementById('introGo'), skip=intro.querySelector('.i-skip');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CTA_AT=2000, timers=[], started=false, ready=false, left=false;
+  var others=[].slice.call(document.body.children).filter(function(n){ return n!==intro && n.tagName!=='SCRIPT'; });
+  others.forEach(function(n){ n.inert=true; });
+  function later(fn,ms){ timers.push(setTimeout(fn,ms)); }
+  function showCta(){ if(ready) return; ready=true; intro.classList.add('i-ready'); go.removeAttribute('tabindex'); go.setAttribute('aria-hidden','false'); }
+  function begin(){ if(started) return; started=true; intro.classList.add('i-run'); later(showCta,CTA_AT); }
+  function finish(){ if(left) return; started=true; timers.forEach(clearTimeout); timers=[]; intro.classList.add('i-run','i-skip'); showCta(); }
+  var guardUntil=0;
+  // évite qu'un « clic fantôme » (même position que « Passer » = bouton du menu) atteigne le site pendant la transition
+  document.addEventListener('click',function(e){ if(Date.now()<guardUntil && !intro.contains(e.target)){ e.stopPropagation(); e.preventDefault(); } },true);
+  function leave(e){
+    if(e && e.preventDefault) e.preventDefault();
+    if(left) return; left=true; timers.forEach(clearTimeout);
+    guardUntil=Date.now()+900;
+    try{ sessionStorage.setItem('introSeen','1'); }catch(err){}
+    try{
+      window.scrollTo(0,0);
+      others.forEach(function(n){ n.inert=false; });
+      root.classList.remove('intro-on');
+      root.classList.add('site-enter');            // le site arrive pendant que l'intro se retire
+      intro.style.removeProperty('animation');
+      intro.classList.add('i-leave');
+    }finally{
+      setTimeout(function(){ root.classList.remove('site-enter'); },1700);
+      setTimeout(function(){ others.forEach(function(n){ n.inert=false; }); root.classList.remove('intro-on'); intro.remove(); },950);
+    }
+  }
+  // --- logos de l'intro : le site prend le premier fichier trouvé dans images/intro/ ---
+  // ordre : NOM.webp, NOM.png, NOM.jpg ; sinon le NOM.svg fourni par défaut (secours)
+  var SLOTS=['logo','whatsapp','mail','phone','instagram','facebook','linkedin'], EXTS=['webp','png','jpg'];
+  function probe(url){ return new Promise(function(ok){ var i=new Image(); i.onload=function(){ok(true);}; i.onerror=function(){ok(false);}; i.src=url; }); }
+  function resolveSlot(name){
+    var el=intro.querySelector('image[href$="/'+name+'.svg"]'); if(!el) return Promise.resolve();
+    return Promise.all(EXTS.map(function(x){ return probe('images/intro/'+name+'.'+x); })).then(function(r){
+      for(var k=0;k<EXTS.length;k++) if(r[k]){ el.setAttribute('href','images/intro/'+name+'.'+EXTS[k]); return; }
+    });
+  }
+  function start(){
+    if(reduce) finish();
+    else if(photo.complete) begin();
+    else { photo.addEventListener('load',begin); photo.addEventListener('error',begin); later(begin,2500); }
+  }
+  var slotsDone=false; function go1(){ if(slotsDone) return; slotsDone=true; start(); }
+  Promise.all(SLOTS.map(resolveSlot)).then(go1,go1);
+  setTimeout(go1,1500);
+  skip.addEventListener('click',leave);
+  go.addEventListener('click',leave);
+  intro.addEventListener('click',function(e){ if(ready && e.target!==skip) leave(e); });
+  document.addEventListener('keydown',function(e){ if(!left && document.body.contains(intro) && e.key==='Escape') leave(); });
+})();
+
+// cadre de focus visible uniquement pour la navigation au clavier
+document.addEventListener('keydown',function(e){ if(e.key==='Tab') document.body.classList.add('kbd'); });
+document.addEventListener('pointerdown',function(){ document.body.classList.remove('kbd'); });
