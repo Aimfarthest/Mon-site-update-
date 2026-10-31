@@ -46,7 +46,7 @@ setHref('waBtn', CONTENT.whatsapp + '?text=' + encodeURIComponent('Bonjour, je s
 setInner('filters', '<button class="active" data-c="all">Tout</button>' + CATEGORIES.map(c => `<button data-c="${esc(c)}">${esc(c)}</button>`).join(''));
 const first = CATEGORIES.map(c => WORKS.find(w => w.category === c)).filter(Boolean);
 setInner('grid', first.map(w => `
-      <div class="card reveal" data-title="${esc(w.title)}" data-cat="${esc(w.category)}" data-year="${w.year}" data-img="${esc(w.img)}">
+      <div class="card reveal" tabindex="0" role="button" aria-label="Agrandir : ${esc(w.title)}" data-title="${esc(w.title)}" data-cat="${esc(w.category)}" data-year="${w.year}" data-img="${esc(w.img)}">
         <div class="ph">${w.img ? `<img src="${esc(encodeURI(photoPath(w.category, w.img)))}" alt="${esc(altWork(w.title, w.category))}" loading="lazy" decoding="async">` : 'Image à venir'}</div>
         <div class="info"><h3>${esc(w.title)}</h3><span>${esc(w.category)} — ${w.year}</span></div>
       </div>`).join(''));
@@ -139,6 +139,13 @@ const re = /<title>[\s\S]*?<link rel="stylesheet" href="style\.css">/;
 if (!re.test(h)) throw new Error('head introuvable');
 h = h.replace(re, () => head);
 h = h.replace(/^\s+<!DOCTYPE/, '<!DOCTYPE');
+
+// --- logos de l'intro : on choisit ici (au build) le 1er fichier trouvé : webp, png, jpg, jpeg, puis svg (secours) ---
+['logo', 'whatsapp', 'mail', 'phone', 'instagram', 'facebook', 'linkedin'].forEach(n => {
+  const ext = ['webp', 'png', 'jpg', 'jpeg', 'svg'].find(x => fs.existsSync(path.join(dir, 'images', 'intro', n + '.' + x)));
+  if (!ext) return;
+  h = h.replace('<image href="images/intro/' + n + '.svg" data-slot="' + n + '"', '<image href="images/intro/' + n + '.' + ext + '" data-slot="' + n + '" data-r="1"');
+});
 
 fs.writeFileSync(path.join(dir, 'index.html'), h, 'utf8');
 console.log('index.html généré,', h.length, 'octets');

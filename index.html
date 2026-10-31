@@ -10,11 +10,16 @@
   try{ if(localStorage.getItem('cookie-consent')==='granted') gtag('consent','update',{analytics_storage:'granted'}); }catch(e){}
 </script>
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NMMPQJ54');</script>
+<script>
+/* Google Tag Manager : chargé après l'affichage de la page, pour ne pas ralentir le démarrage */
+window.addEventListener('load',function(){
+  var run=function(){var w=window,d=document,s='script',l='dataLayer',i='GTM-NMMPQJ54';
+    w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
+    j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);};
+  if('requestIdleCallback' in window) requestIdleCallback(run,{timeout:3500}); else setTimeout(run,2000);
+});
+</script>
 <!-- End Google Tag Manager -->
 
 <script>try{var d=document.documentElement;if(location.hash.length>1||sessionStorage.getItem('introSeen'))d.classList.add('no-intro');else d.classList.add('intro-on');}catch(e){}</script>
@@ -113,21 +118,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <button type="button" class="i-skip">Passer</button>
   <p class="i-sr">Josaphat N. Ngoma — Illustrateur, portraitiste, designer graphique. WhatsApp +243 82 81 81 386</p>
   <div class="i-stage">
-    <img class="i-photo" src="images/intro/portrait.webp" width="2000" height="2000" alt="Josaphat N. Ngoma" decoding="async">
+    <img class="i-photo" src="images/intro/portrait.webp" width="1400" height="1400" alt="Josaphat N. Ngoma" decoding="async" fetchpriority="high">
     <svg class="i-svg" viewBox="0 0 1932 1932" aria-hidden="true" focusable="false">
-  <g class="i-a" style="--fx:-60px;--d:.35s"><image href="images/intro/logo.svg" x="100" y="100" width="230" height="210" preserveAspectRatio="xMinYMid meet"/></g>
+  <g class="i-a" style="--fx:-60px;--d:.35s"><image href="images/intro/logo.svg" data-slot="logo" data-r="1" x="100" y="100" width="230" height="210" preserveAspectRatio="xMinYMid meet"/></g>
   <text class="i-a" x="370" y="185" font-size="118" font-weight="300" fill="#00E6C3" textLength="535" lengthAdjust="spacingAndGlyphs" style="--fx:-90px;--d:.5s">JOSAPHAT N.</text>
   <text class="i-a" x="370" y="295" font-size="128" font-weight="800" fill="#00E6C3" textLength="400" lengthAdjust="spacingAndGlyphs" style="--fx:-90px;--d:.6s">NGOMA</text>
   <text class="i-a" x="108" y="383" font-size="50" font-weight="700" fill="#fff" textLength="900" lengthAdjust="spacingAndGlyphs" style="--fy:30px;--d:.75s">Illustrateur <tspan fill="#00E6C3">/</tspan> Portraitiste <tspan fill="#00E6C3">/</tspan> Designer graphique</text>
-  <g class="i-a" style="--fx:-240px;--d:0.95s"><rect x="112" y="527" width="206" height="206" fill="rgba(15,34,39,.72)" stroke="#00E6C3" stroke-width="8"/><image href="images/intro/icon-tablette.webp" x="142" y="557" width="146" height="146" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fx:-240px;--d:1.07s"><rect x="112" y="790" width="206" height="206" fill="rgba(15,34,39,.72)" stroke="#00E6C3" stroke-width="8"/><image href="images/intro/icon-palette.webp" x="142" y="820" width="146" height="146" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fx:-240px;--d:1.2s"><rect x="112" y="1052" width="206" height="206" fill="rgba(15,34,39,.72)" stroke="#00E6C3" stroke-width="8"/><image href="images/intro/icon-plume.webp" x="142" y="1082" width="146" height="146" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fy:80px;--d:1.4s"><image href="images/intro/whatsapp.svg" x="116" y="1532" width="152" height="170" preserveAspectRatio="xMidYMid meet"/><text x="288" y="1608" font-size="56" fill="#00E6C3" textLength="200" lengthAdjust="spacingAndGlyphs">Whatsapp</text><text x="285" y="1672" font-size="58" font-weight="600" fill="#fff" textLength="345" lengthAdjust="spacingAndGlyphs">+243 82 81 81 386</text></g>
-  <g class="i-a" style="--fs:.3;--d:1.575s"><image href="images/intro/mail.svg" x="108" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fs:.3;--d:1.625s"><image href="images/intro/phone.svg" x="188" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fs:.3;--d:1.675s"><image href="images/intro/instagram.svg" x="268" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fs:.3;--d:1.725s"><image href="images/intro/facebook.svg" x="348" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
-  <g class="i-a" style="--fs:.3;--d:1.775s"><image href="images/intro/linkedin.svg" x="428" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fx:-240px;--d:0.95s"><rect x="112" y="527" width="206" height="206" fill="rgba(15,34,39,.72)" stroke="#00E6C3" stroke-width="8"/><image href="images/intro/icon-tablette.svg" x="142" y="557" width="146" height="146" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fx:-240px;--d:1.07s"><rect x="112" y="790" width="206" height="206" fill="rgba(15,34,39,.72)" stroke="#00E6C3" stroke-width="8"/><image href="images/intro/icon-palette.svg" x="142" y="820" width="146" height="146" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fx:-240px;--d:1.2s"><rect x="112" y="1052" width="206" height="206" fill="rgba(15,34,39,.72)" stroke="#00E6C3" stroke-width="8"/><image href="images/intro/icon-plume.svg" x="142" y="1082" width="146" height="146" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fy:80px;--d:1.4s"><image href="images/intro/whatsapp.svg" data-slot="whatsapp" data-r="1" x="116" y="1532" width="152" height="170" preserveAspectRatio="xMidYMid meet"/><text x="288" y="1608" font-size="56" fill="#00E6C3" textLength="200" lengthAdjust="spacingAndGlyphs">Whatsapp</text><text x="285" y="1672" font-size="58" font-weight="600" fill="#fff" textLength="345" lengthAdjust="spacingAndGlyphs">+243 82 81 81 386</text></g>
+  <g class="i-a" style="--fs:.3;--d:1.575s"><image href="images/intro/mail.svg" data-slot="mail" data-r="1" x="108" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fs:.3;--d:1.625s"><image href="images/intro/phone.svg" data-slot="phone" data-r="1" x="188" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fs:.3;--d:1.675s"><image href="images/intro/instagram.svg" data-slot="instagram" data-r="1" x="268" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fs:.3;--d:1.725s"><image href="images/intro/facebook.svg" data-slot="facebook" data-r="1" x="348" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
+  <g class="i-a" style="--fs:.3;--d:1.775s"><image href="images/intro/linkedin.svg" data-slot="linkedin" data-r="1" x="428" y="1788" width="54" height="54" preserveAspectRatio="xMidYMid meet"/></g>
     </svg>
   </div>
   <a id="introGo" class="i-cta" href="#portfolio" tabindex="-1" aria-hidden="true">Découvrir mes œuvres →</a>
@@ -193,23 +198,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <div class="filters" id="filters"><button class="active" data-c="all">Tout</button><button data-c="Portraits">Portraits</button><button data-c="Illustration">Illustration</button><button data-c="Design graphique">Design graphique</button><button data-c="Communication visuelle">Communication visuelle</button><button data-c="Projets numériques">Projets numériques</button></div>
     </div>
     <div class="grid" id="grid">
-      <div class="card reveal" data-title="Portrait au crayon 01" data-cat="Portraits" data-year="2025" data-img="Portrait au crayon 01.webp">
+      <div class="card reveal" tabindex="0" role="button" aria-label="Agrandir : Portrait au crayon 01" data-title="Portrait au crayon 01" data-cat="Portraits" data-year="2025" data-img="Portrait au crayon 01.webp">
         <div class="ph"><img src="images/portfolio/Portraits/Portrait%20au%20crayon%2001.webp" alt="Portrait au crayon 01 — Portraits, par Josaphat N. Ngoma, Kinshasa" loading="lazy" decoding="async"></div>
         <div class="info"><h3>Portrait au crayon 01</h3><span>Portraits — 2025</span></div>
       </div>
-      <div class="card reveal" data-title="Afro Man" data-cat="Illustration" data-year="2025" data-img="Afro man.webp">
+      <div class="card reveal" tabindex="0" role="button" aria-label="Agrandir : Afro Man" data-title="Afro Man" data-cat="Illustration" data-year="2025" data-img="Afro man.webp">
         <div class="ph"><img src="images/portfolio/Illustration/Afro%20man.webp" alt="Afro Man — Illustration, par Josaphat N. Ngoma, Kinshasa" loading="lazy" decoding="async"></div>
         <div class="info"><h3>Afro Man</h3><span>Illustration — 2025</span></div>
       </div>
-      <div class="card reveal" data-title="B Store" data-cat="Design graphique" data-year="2025" data-img="B STORE.webp">
+      <div class="card reveal" tabindex="0" role="button" aria-label="Agrandir : B Store" data-title="B Store" data-cat="Design graphique" data-year="2025" data-img="B STORE.webp">
         <div class="ph"><img src="images/portfolio/Design%20graphique/B%20STORE.webp" alt="B Store — Design graphique, par Josaphat N. Ngoma, Kinshasa" loading="lazy" decoding="async"></div>
         <div class="info"><h3>B Store</h3><span>Design graphique — 2025</span></div>
       </div>
-      <div class="card reveal" data-title="Benda Beauté Event" data-cat="Communication visuelle" data-year="2025" data-img="Benda beauté Event.webp">
+      <div class="card reveal" tabindex="0" role="button" aria-label="Agrandir : Benda Beauté Event" data-title="Benda Beauté Event" data-cat="Communication visuelle" data-year="2025" data-img="Benda beauté Event.webp">
         <div class="ph"><img src="images/portfolio/Communication%20visuelle/Benda%20beaut%C3%A9%20Event.webp" alt="Benda Beauté Event — Communication visuelle, par Josaphat N. Ngoma, Kinshasa" loading="lazy" decoding="async"></div>
         <div class="info"><h3>Benda Beauté Event</h3><span>Communication visuelle — 2025</span></div>
       </div>
-      <div class="card reveal" data-title="Maillot — Rendu 3D" data-cat="Projets numériques" data-year="2025" data-img="Maillot rendu 3D.webp">
+      <div class="card reveal" tabindex="0" role="button" aria-label="Agrandir : Maillot — Rendu 3D" data-title="Maillot — Rendu 3D" data-cat="Projets numériques" data-year="2025" data-img="Maillot rendu 3D.webp">
         <div class="ph"><img src="images/portfolio/Projet%20num%C3%A9rique/Maillot%20rendu%203D.webp" alt="Maillot — Rendu 3D — Projets numériques, par Josaphat N. Ngoma, Kinshasa" loading="lazy" decoding="async"></div>
         <div class="info"><h3>Maillot — Rendu 3D</h3><span>Projets numériques — 2025</span></div>
       </div></div>

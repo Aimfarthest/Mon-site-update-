@@ -55,7 +55,7 @@ h1,h2,h3{font-weight:600; letter-spacing:-.01em}
 #navMobile{position:fixed; inset:0; z-index:150; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; justify-content:safe center; gap:.8rem; padding:5rem 1.5rem 2rem; overflow-y:auto; transform:translateX(100%); transition:transform .4s var(--ease)}
 body.nav-open #navMobile{transform:translateX(0)}
 /* liens du menu = vrais boutons (même style que les boutons de contact), zone de toucher large (52px) */
-#navMobile a{display:flex; align-items:center; justify-content:center; width:min(100%,320px); min-height:52px; padding:.85rem 1.4rem; border-radius:2rem; font-size:1rem; color:var(--fg); border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 8px 24px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.16); transition:all var(--dur-s)}
+#navMobile a{display:flex; align-items:center; justify-content:center; width:min(100%,320px); min-height:52px; padding:.85rem 1.4rem; border-radius:2rem; font-size:1rem; color:var(--fg); border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 8px 24px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.16); transition:background-color var(--dur-s), border-color var(--dur-s), color var(--dur-s), box-shadow var(--dur-s), transform var(--dur-s), opacity var(--dur-s)}
 @media (hover:hover){#navMobile a:hover{border-color:var(--accent); color:var(--accent)}}
 #navMobile .close{position:absolute; top:calc(1rem + env(safe-area-inset-top,0px)); right:1rem; width:48px; height:48px; display:flex; align-items:center; justify-content:center; background:none; border:none; color:var(--fg); font-size:1.6rem; cursor:pointer}
 
@@ -119,7 +119,7 @@ section{padding:6rem 0}
 
 /* filters */
 .filters{display:flex; gap:.55rem; flex-wrap:wrap; align-items:center}
-.filters button{border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 6px 18px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.14); color:var(--muted); padding:.48rem 1rem; min-height:36px; border-radius:2rem; font-size:.8rem; cursor:pointer; transition:all var(--dur-s); white-space:nowrap}
+.filters button{border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%); box-shadow:0 6px 18px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.14); color:var(--muted); padding:.48rem 1rem; min-height:36px; border-radius:2rem; font-size:.8rem; cursor:pointer; transition:background-color var(--dur-s), border-color var(--dur-s), color var(--dur-s), box-shadow var(--dur-s), transform var(--dur-s), opacity var(--dur-s); white-space:nowrap}
 .filters button.active{border-color:var(--fg); color:var(--fg)}
 @media (hover:hover){.filters button:hover{border-color:var(--fg); color:var(--fg)}}
 @media (max-width:760px){
@@ -141,7 +141,7 @@ section{padding:6rem 0}
 .grid.two-col{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:600px){ .grid.two-col{gap:.8rem} }
 /* reveal : animation d'apparition/disparition au scroll, réutilisée par .card et .product */
-.reveal{--dir:-1; --tx:70px; --rblur:10px; --rdur:.85s; opacity:0; filter:blur(var(--rblur)); transform:translateX(calc(var(--dir) * var(--tx))); transition:transform var(--rdur) var(--ease), opacity var(--rdur) var(--ease), filter var(--rdur) var(--ease); will-change:transform, opacity, filter}
+.reveal{--dir:-1; --tx:70px; --rblur:6px; --rdur:.85s; opacity:0; filter:blur(var(--rblur)); transform:translateX(calc(var(--dir) * var(--tx))); transition:transform var(--rdur) var(--ease), opacity var(--rdur) var(--ease), filter var(--rdur) var(--ease); will-change:transform, opacity, filter}
 .reveal.visible{opacity:1; filter:blur(0); transform:translateX(0)}
 @media (prefers-reduced-motion:reduce){ .reveal{transition:opacity var(--dur-s)!important; filter:none!important; transform:none!important} }
 
@@ -154,7 +154,7 @@ section{padding:6rem 0}
 @media (prefers-reduced-motion:reduce){ .card.reveal{translate:none!important} }
 .card .ph{position:absolute; inset:0; border-radius:1.1rem; overflow:hidden; background:linear-gradient(135deg,var(--panel),var(--panel-2)); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; transition:transform .6s var(--ease)}
 .card:hover .ph{transform:scale(1.035)}
-.card .info{position:absolute; left:0; right:0; bottom:0; padding:1.1rem; border-radius:0 0 1.1rem 1.1rem; background:linear-gradient(0deg,rgba(0,0,0,.55),transparent); color:#fff; opacity:0; transform:translateY(8px); transition:all var(--dur-s)}
+.card .info{position:absolute; left:0; right:0; bottom:0; padding:1.1rem; border-radius:0 0 1.1rem 1.1rem; background:linear-gradient(0deg,rgba(0,0,0,.55),transparent); color:#fff; opacity:0; transform:translateY(8px); transition:background-color var(--dur-s), border-color var(--dur-s), color var(--dur-s), box-shadow var(--dur-s), transform var(--dur-s), opacity var(--dur-s)}
 .card:hover .info{opacity:1; transform:translateY(0)}
 .card .info h3{font-size:1rem; font-weight:500}
 .card .info span{font-size:.75rem; opacity:.85}
@@ -183,7 +183,7 @@ section{padding:6rem 0}
 
 /* contact */
 #contact .row{display:flex; flex-wrap:wrap; gap:.75rem; margin-top:2rem; align-items:stretch}
-#contact a.btn{border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 8px 24px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.16); padding:.9rem 1.4rem; min-height:46px; border-radius:2rem; font-size:.85rem; transition:all var(--dur-s); display:inline-flex; align-items:center; justify-content:center; white-space:nowrap}
+#contact a.btn{border:1px solid var(--line); background:rgba(var(--overlay-rgb),.32); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); box-shadow:0 8px 24px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.16); padding:.9rem 1.4rem; min-height:46px; border-radius:2rem; font-size:.85rem; transition:background-color var(--dur-s), border-color var(--dur-s), color var(--dur-s), box-shadow var(--dur-s), transform var(--dur-s), opacity var(--dur-s); display:inline-flex; align-items:center; justify-content:center; white-space:nowrap}
 #contact a.btn:hover{transform:translateY(-2px)}
 @media (hover:hover){#contact a.btn:hover{border-color:var(--accent); color:var(--accent)}}
 @media (max-width:600px){
@@ -400,3 +400,11 @@ html.site-enter #portfolio{animation:s-rise-blur .85s cubic-bezier(.16,1,.3,1) .
   #intro.i-leave{animation:i-fade .25s linear forwards; box-shadow:none}
   html.site-enter #portfolio{animation:none}
 }
+
+
+/* ===== Optimisation : performances ===== */
+/* le flou d'arrière-plan est coûteux sur mobile : gardé seulement sur la barre du haut, le menu et le bouton de l'intro */
+.glass,.product a,.t-btn,.filters button,#contact a.btn,#navMobile a,#top,.i-skip{-webkit-backdrop-filter:none!important; backdrop-filter:none!important}
+/* la visionneuse bloque le défilement de la page derrière elle */
+html.lb-open{overflow:hidden}
+.card:focus-visible{outline:2px solid var(--accent,#00E6C3); outline-offset:3px}

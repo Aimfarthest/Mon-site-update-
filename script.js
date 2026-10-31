@@ -247,7 +247,7 @@ function renderGrid(filter){
   grid.classList.toggle('two-col', !all);
   grid.innerHTML = list
     .map((w,i)=>`
-      <div class="card reveal"${all ? '' : ` data-side="${i%2===0?'left':'right'}"`} data-title="${w.title}" data-cat="${w.category}" data-year="${w.year}" data-img="${w.img}">
+      <div class="card reveal"${all ? '' : ` data-side="${i%2===0?'left':'right'}"`} tabindex="0" role="button" aria-label="Agrandir : ${w.title}" data-title="${w.title}" data-cat="${w.category}" data-year="${w.year}" data-img="${w.img}">
         <div class="ph">${w.img ? `<img src="${encodeURI(photoPath(w.category, w.img))}" alt="${altWork(w.title,w.category)}" loading="lazy" decoding="async">` : 'Image à venir'}</div>
         <div class="info"><h3>${w.title}</h3><span>${w.category} — ${w.year}</span></div>
       </div>`).join('');
@@ -257,6 +257,7 @@ renderGrid('all');
 
 filters.addEventListener('click', e=>{
   if(e.target.tagName!=='BUTTON') return;
+  if(e.target.classList.contains('active')){ grid.scrollIntoView({behavior:'smooth', block:'start'}); return; }
   filters.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
   e.target.classList.add('active');
   renderGrid(e.target.dataset.c);
@@ -320,20 +321,25 @@ document.querySelectorAll('#navMobile a').forEach(a=>a.addEventListener('click',
 const navEl = document.getElementById('nav');
 const topBtn = document.getElementById('top');
 const footerEl = document.querySelector('footer');
+let _topBottom='';
 function positionTopBtn(){
   const gap = 16; // marge au-dessus du footer, en px
   const overlap = window.innerHeight - footerEl.getBoundingClientRect().top;
-  topBtn.style.bottom = overlap > 0 ? (overlap + gap) + 'px' : '';
+  const v = overlap > 0 ? (overlap + gap) + 'px' : '';
+  if(v!==_topBottom){ _topBottom=v; topBtn.style.bottom=v; }
 }
-window.addEventListener('scroll', ()=>{
+let _ticking=false;
+function onScroll(){
+  _ticking=false;
   const y = window.scrollY;
-  scrollDir = y > lastY ? -1 : 1;
+  positionTopBtn();                         // lecture de la mise en page d'abord…
+  if(y!==lastY) scrollDir = y > lastY ? -1 : 1;
   lastY = y;
-  navEl.classList.toggle('scrolled', y>10);
+  navEl.classList.toggle('scrolled', y>10); // …écritures ensuite
   topBtn.classList.toggle('show', y>500);
-  positionTopBtn();
-});
-window.addEventListener('resize', positionTopBtn);
+}
+window.addEventListener('scroll', ()=>{ if(!_ticking){ _ticking=true; requestAnimationFrame(onScroll); } }, {passive:true});
+window.addEventListener('resize', ()=>requestAnimationFrame(positionTopBtn), {passive:true});
 positionTopBtn();
 topBtn.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
 
@@ -356,22 +362,33 @@ themeBtn.addEventListener('click', ()=>{
 
 // lightbox
 const lb = document.getElementById('lightbox');
+let lbOpener=null;
+function openLb(){ lb.classList.add('open'); root.classList.add('lb-open'); const c=lb.querySelector('.close'); if(c) c.focus({preventScroll:true}); }
+function closeLb(){ if(!lb.classList.contains('open')) return; lb.classList.remove('open'); root.classList.remove('lb-open'); if(lbOpener){ lbOpener.focus({preventScroll:true}); lbOpener=null; } }
 grid.addEventListener('click', e=>{
   const card = e.target.closest('.card');
   if(!card) return;
   const img = card.dataset.img;
+  lbOpener = card;
   lbImg.classList.toggle('has-img', !!img);
-  lbImg.innerHTML = img ? `<img src="${encodeURI(photoPath(card.dataset.cat || "", img))}" alt="${altWork(card.dataset.title, card.dataset.cat)}">` : 'Image à venir';
+  lbImg.innerHTML = img ? `<img src="${encodeURI(photoPath(card.dataset.cat || "", img))}" alt="${altWork(card.dataset.title, card.dataset.cat)}" decoding="async">` : 'Image à venir';
   lbTitle.textContent = card.dataset.title;
   lbMeta.textContent = card.dataset.cat + ' — ' + card.dataset.year;
-  lb.classList.add('open');
+  openLb();
 });
-lb.querySelector('.close').addEventListener('click', ()=>lb.classList.remove('open'));
-lb.addEventListener('click', e=>{ if(e.target===lb) lb.classList.remove('open'); });
+grid.addEventListener('keydown', e=>{
+  if((e.key==='Enter' || e.key===' ') && e.target.classList && e.target.classList.contains('card')){ e.preventDefault(); e.target.click(); }
+});
+lb.querySelector('.close').addEventListener('click', closeLb);
+lb.addEventListener('click', e=>{ if(e.target===lb) closeLb(); });
 
 
 // ===== PRO : menu, cookies, sécurité d'affichage =====
-document.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.body.classList.contains('nav-open')){ closeMobileNav(); burgerBtn.focus(); } });
+document.addEventListener('keydown', e=>{
+  if(e.key!=='Escape') return;
+  if(lb.classList.contains('open')) closeLb();
+  else if(document.body.classList.contains('nav-open')){ closeMobileNav(); burgerBtn.focus(); }
+});
 (function(){
   const box=document.getElementById('consent'); let saved=null;
   try{ saved=localStorage.getItem('cookie-consent'); }catch(e){}
@@ -429,7 +446,7 @@ setTimeout(()=>{ const r=document.querySelectorAll('.reveal'); if(r.length && !d
   var SLOTS=['logo','whatsapp','mail','phone','instagram','facebook','linkedin'], EXTS=['webp','png','jpg'];
   function probe(url){ return new Promise(function(ok){ var i=new Image(); i.onload=function(){ok(true);}; i.onerror=function(){ok(false);}; i.src=url; }); }
   function resolveSlot(name){
-    var el=intro.querySelector('image[href$="/'+name+'.svg"]'); if(!el) return Promise.resolve();
+    var el=intro.querySelector('image[data-slot="'+name+'"]:not([data-r])'); if(!el) return Promise.resolve();   // data-r = déjà résolu au build
     return Promise.all(EXTS.map(function(x){ return probe('images/intro/'+name+'.'+x); })).then(function(r){
       for(var k=0;k<EXTS.length;k++) if(r[k]){ el.setAttribute('href','images/intro/'+name+'.'+EXTS[k]); return; }
     });
